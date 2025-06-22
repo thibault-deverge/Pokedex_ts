@@ -1,0 +1,26 @@
+{
+	"name": "pokedex_ts",
+	"version": "1.0.0",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"test": "vitest --run",
+		"build": "npx tsx",
+		"start": "node dist/main.js",
+		"dev": "npx tsc && node dist/main.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"devDependencies": {
+		"@types/figlet": "^1.7.0",
+		"@types/node": "^24.0.3",
+		"typescript": "^5.8.3",
+		"vitest": "^3.2.4"
+	},
+	"dependencies": {
+		"chalk": "^5.4.1",
+		"figlet": "^1.8.1"
+	}
+}
