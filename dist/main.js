@@ -1,17 +1,16 @@
 import figlet from "figlet";
-import chalk from "chalk";
 import { startREPL } from "./repl.js";
 import { initState } from "./state.js";
+import { logBrightYellow, logError, logYellow } from "./utils/index.js";
 function main() {
-    figlet("Pokedex", (err, data) => {
-        if (err) {
-            console.log("Something went wrong with figlet...");
+    figlet("Pokedex", (_, data) => {
+        if (!data) {
+            logError("Failed to load title.");
             return;
         }
-        console.log(chalk.yellow(data));
-        console.log(chalk.bold.yellowBright("📘 Welcome to the Pokedex!"));
-        const state = initState();
-        startREPL(state);
+        logYellow(data);
+        logBrightYellow("📘 Welcome to the Pokedex!");
+        startREPL(initState());
     });
 }
 main();

@@ -1,12 +1,12 @@
 import readline from "readline";
 import chalk from "chalk";
-import { PokeAPI } from "./pokeapi.js";
-import { getCommands } from "./utils/commands.js";
+import { PokeAPI } from "./api/pokeapi.js";
+import { getCommands } from "./commands/commands.js";
 /**
- * Initializes the application state by creating a readline interface for user input
- * and retrieving the command registry.
+ * Initializes and returns the global application state.
+ * Sets up the readline interface, API handler, command registry, and initial Pokédex data.
  *
- * @returns {State} The initial state object containing the readline interface and command registry.
+ * @returns The initialized application state object.
  */
 export function initState() {
     return {

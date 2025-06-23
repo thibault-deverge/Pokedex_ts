@@ -1,11 +1,8 @@
-import chalk from "chalk";
-import { commandExit } from "./utils/command_exit.js";
+import { commandExit } from "./commands/index.js";
+import { cleanInput, logError } from "./utils/index.js";
 /**
- * Starts the Read-Eval-Print Loop (REPL) for the application.
- * This function initializes the REPL interface, listens for user input,
- * parses commands and executes the corresponding command callbacks.
- *
- * @param state - The current application state, containing the readline interface and command registry.
+ * Starts a REPL interface that processes user commands from the registry.
+ * @param state - Contains readline interface and command registry
  */
 export function startREPL(state) {
     const { rl, registry } = state;
@@ -20,7 +17,7 @@ export function startREPL(state) {
                     await command.callback(state, ...words.slice(1));
                 }
                 else {
-                    logUnknownCommand();
+                    logError("Unknown command. Type 'help' to see available options.");
                 }
             }
         }
@@ -30,22 +27,4 @@ export function startREPL(state) {
         console.log("");
         commandExit(state);
     });
-}
-/**
- * Cleans and normalizes a user input string by trimming whitespace,
- * converting to lowercase, splitting into words, and filtering out empty strings.
- *
- * @param input - The raw input string to be cleaned.
- * @returns An array of non-empty, lowercase words from the input.
- */
-export function cleanInput(input) {
-    const cleanInput = input
-        .trim()
-        .toLowerCase()
-        .split(" ")
-        .filter((input) => input.length > 0);
-    return cleanInput;
-}
-function logUnknownCommand() {
-    console.log(chalk.redBright("❌ Unknown command. Type 'help' to see available options. 🧭"));
 }
