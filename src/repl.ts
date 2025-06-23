@@ -4,6 +4,13 @@ import chalk from "chalk";
 import type { State } from "./state.js";
 import { commandExit } from "./utils/command_exit.js";
 
+/**
+ * Starts the Read-Eval-Print Loop (REPL) for the application.
+ * This function initializes the REPL interface, listens for user input,
+ * parses commands and executes the corresponding command callbacks.
+ *
+ * @param state - The current application state, containing the readline interface and command registry.
+ */
 export function startREPL(state: State) {
 	const { rl, registry } = state;
 	rl.prompt();
