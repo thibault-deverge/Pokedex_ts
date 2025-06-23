@@ -1,6 +1,17 @@
 import chalk from "chalk";
-import type { State } from "src/state";
+import type { State } from "../types";
+import {
+	logBrightYellow,
+	logError,
+	logMagentaBold,
+	logSeparator,
+} from "../utils/index.js";
 
+/**
+ * Displays all Pokémon caught by the player in the Pokédex.
+ *
+ * @param state - The current application state containing the player's Pokédex.
+ */
 export async function commandPokedex(state: State, ...args: string[]) {
 	const pokemonList: string[] = [];
 	for (const pokemon of Object.keys(state.pokedex)) {
@@ -8,16 +19,16 @@ export async function commandPokedex(state: State, ...args: string[]) {
 	}
 
 	if (!pokemonList.length) {
-		console.log(
-			chalk.redBright("Your Pokédex is empty... Catch some Pokémon, lazy Trainer! 🐾")
-		);
+		logError("Your Pokédex is empty... Catch some Pokémon, lazy Trainer! 🐾");
 		return;
 	}
 
-	console.log("Your Pokedex:");
+	logMagentaBold("\n📘 Your Pokédex:");
+	logSeparator();
 	pokemonList.forEach((name, index) => {
 		const num = chalk.gray(`#${index + 1}`);
 		const label = chalk.yellowBright(name);
 		console.log(`${num} ${label}`);
 	});
+	console.log();
 }

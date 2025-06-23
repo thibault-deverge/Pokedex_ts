@@ -1,28 +1,28 @@
-import chalk from "chalk";
-import type { State } from "src/state";
+import type { State } from "../types";
+import { logError, logGreenBright } from "../utils/index.js";
 
 /**
  * Navigates to the previous page of locations in the Pokédex and displays them.
  *
- * @param state - The current application state, containing pagination URLs and the Pokédex API client.
+ * @param state - The current application state.
  * @returns A promise that resolves when the operation is complete.
  */
 export async function commandMapB(state: State, ...args: string[]) {
 	const url = state.prevLocationsURL;
 	if (!url) {
-		console.log(chalk.red("❌ You're on the first page already."));
+		logError("You're on the first page already.");
 		return;
 	}
 
 	const locations = await state.pokeAPI.fetchLocations(url);
 	if (!locations) {
-		console.log(chalk.red("❌ Failed to fetch locations from the Pokédex API."));
+		logError("Failed to fetch locations from the Pokédex API.");
 		return;
 	}
 
 	state.nextLocationsURL = locations.next;
 	state.prevLocationsURL = locations.previous;
 	locations.results.forEach((result) => {
-		console.log(chalk.greenBright(result.name));
+		logGreenBright(result.name);
 	});
 }

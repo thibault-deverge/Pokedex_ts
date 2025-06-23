@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { Cache } from "src/pokecache.js";
+import { Cache } from "src/api/pokecache.js";
 
 describe("Cache", () => {
 	test("should return cached value if not expired", () => {

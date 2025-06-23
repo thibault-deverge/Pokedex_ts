@@ -1,30 +1,15 @@
 import readline from "readline";
 import chalk from "chalk";
 
-import type { Interface } from "readline";
-import { PokeAPI, Pokemon } from "./pokeapi.js";
-import { getCommands } from "./utils/commands.js";
-
-export type State = {
-	rl: Interface;
-	pokeAPI: PokeAPI;
-	pokedex: Record<string, Pokemon>;
-	registry: Record<string, CLICommand>;
-	nextLocationsURL: string | null;
-	prevLocationsURL: string | null;
-};
-
-export type CLICommand = {
-	name: string;
-	description: string;
-	callback: (state: State, ...args: string[]) => Promise<void>;
-};
+import type { State } from "./types";
+import { PokeAPI } from "./api/pokeapi.js";
+import { getCommands } from "./commands/commands.js";
 
 /**
- * Initializes the application state by creating a readline interface for user input
- * and retrieving the command registry.
+ * Initializes and returns the global application state.
+ * Sets up the readline interface, API handler, command registry, and initial Pokédex data.
  *
- * @returns {State} The initial state object containing the readline interface and command registry.
+ * @returns The initialized application state object.
  */
 export function initState(): State {
 	return {
