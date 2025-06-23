@@ -5,6 +5,7 @@ import { commandMapB } from "./command_mapb.js";
 import { commandExplore } from "./command_explore.js";
 import { commandCatch } from "./command_catch.js";
 import { commandInspect } from "./command_inspect.js";
+import { commandPokedex } from "./command_pokedex.js";
 /**
  * Returns a record of available CLI commands for the pokedex application.
  *
@@ -46,6 +47,11 @@ export function getCommands() {
             name: "inspect",
             description: "Usage: inspect <pokemon>. Inspect a pokemon to have its information (must be catch at least one before).",
             callback: commandInspect,
+        },
+        pokedex: {
+            name: "pokedex",
+            description: "Display all the pokemon you've caught. Gotta catch 'em all!",
+            callback: commandPokedex,
         },
     };
 }
