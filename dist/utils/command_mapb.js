@@ -5,7 +5,7 @@ import chalk from "chalk";
  * @param state - The current application state, containing pagination URLs and the Pokédex API client.
  * @returns A promise that resolves when the operation is complete.
  */
-export async function commandMapB(state) {
+export async function commandMapB(state, ...args) {
     const url = state.prevLocationsURL;
     if (!url) {
         console.log(chalk.red("❌ You're on the first page already."));

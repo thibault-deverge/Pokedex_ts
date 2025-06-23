@@ -7,7 +7,7 @@ import type { State } from "src/state";
  * @param state - The current application state, containing pagination URLs and the Pokédex API client.
  * @returns A promise that resolves when the operation is complete.
  */
-export async function commandMapB(state: State) {
+export async function commandMapB(state: State, ...args: string[]) {
 	const url = state.prevLocationsURL;
 	if (!url) {
 		console.log(chalk.red("❌ You're on the first page already."));

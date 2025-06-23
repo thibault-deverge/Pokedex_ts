@@ -16,6 +16,7 @@ export function initState() {
             prompt: chalk.magentaBright.bold("🧭 Pokedex > "),
         }),
         pokeAPI: new PokeAPI(),
+        pokedex: {},
         registry: getCommands(),
         nextLocationsURL: "https://pokeapi.co/api/v2/location-area/",
         prevLocationsURL: null,

@@ -15,7 +15,13 @@ export class Cache {
     }
     get(key) {
         const entry = this.#cache.get(key);
-        return entry ? entry.val : undefined;
+        if (!entry)
+            return undefined;
+        if (entry.createdAt < Date.now() - this.#interval) {
+            this.#cache.delete(key);
+            return undefined;
+        }
+        return entry.val;
     }
     stopReapLoop() {
         clearInterval(this.#reapIntervalId);

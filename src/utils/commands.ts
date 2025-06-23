@@ -4,6 +4,9 @@ import { commandExit } from "./command_exit.js";
 import { commandHelp } from "./commands_help.js";
 import { commandMap } from "./command_map.js";
 import { commandMapB } from "./command_mapb.js";
+import { commandExplore } from "./command_explore.js";
+import { commandCatch } from "./command_catch.js";
+import { commandInspect } from "./command_inspect.js";
 
 /**
  * Returns a record of available CLI commands for the pokedex application.
@@ -32,6 +35,23 @@ export function getCommands(): Record<string, CLICommand> {
 			name: "mapb",
 			description: "Display the previous 20 locations areas displayed by map.",
 			callback: commandMapB,
+		},
+		explore: {
+			name: "explore",
+			description:
+				"Usage: explore <location>. Display list of all pokemon in a given area.",
+			callback: commandExplore,
+		},
+		catch: {
+			name: "catch",
+			description: "Usage: catch <pokemon>. Try to catch a specific pokemon.",
+			callback: commandCatch,
+		},
+		inspect: {
+			name: "inspect",
+			description:
+				"Usage: inspect <pokemon>. Inspect a pokemon to have its information (must be catch at least one before).",
+			callback: commandInspect,
 		},
 	};
 }

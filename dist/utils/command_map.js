@@ -7,7 +7,7 @@ const DEFAULT_URL_LOCATION = "https://pokeapi.co/api/v2/location-area/";
  * @param state - The current application state, which includes the Pokémon API interface and pagination URLs.
  * @returns A promise that resolves when the operation is complete.
  */
-export async function commandMap(state) {
+export async function commandMap(state, ...args) {
     const url = state.nextLocationsURL || DEFAULT_URL_LOCATION;
     const locations = await state.pokeAPI.fetchLocations(url);
     if (!locations) {

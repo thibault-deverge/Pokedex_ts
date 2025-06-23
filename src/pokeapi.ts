@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { Cache } from "./pokecache.js";
 
 export type ShallowLocations = {
@@ -11,11 +12,29 @@ export type ShallowLocations = {
 };
 
 export type Location = {
-	id: number;
+	pokemon_encounters: {
+		pokemon: {
+			name: string;
+			url: string;
+		};
+	}[];
+};
+
+export type Pokemon = {
 	name: string;
-	areas: {
-		name: string;
-		url: string;
+	base_experience: number;
+	height: string;
+	weight: string;
+	stats: {
+		base_stat: number;
+		stat: {
+			name: string;
+		};
+	}[];
+	types: {
+		type: {
+			name: string;
+		};
 	}[];
 };
 
@@ -23,34 +42,24 @@ export class PokeAPI {
 	private static readonly baseURL = "https://pokeapi.co/api/v2";
 	#cache = new Cache(10000);
 
-	async fetchLocations(pageURL?: string): Promise<ShallowLocations | undefined> {
-		const url = pageURL ? pageURL : `${PokeAPI.baseURL}/location-area/`;
-		const data: ShallowLocations | undefined = await this.#fetchAndCache(url);
-
-		if (data) {
-			const cleanedData = {
-				count: data.count,
-				next: data.next,
-				previous: data.previous,
-				results: data.results,
-			};
-			if (!this.#cache.get(url)) {
-				this.#cache.add<ShallowLocations>(url, cleanedData);
-			}
-			return cleanedData;
-		}
+	async fetchPokemon(pokemonName: string) {
+		const url = `${PokeAPI.baseURL}/pokemon/${pokemonName}`;
+		const data: Pokemon | undefined = await this.#fetchAndCache<Pokemon>(url);
+		return data;
 	}
 
-	async fetchLocation(locationName: string): Promise<Location | undefined> {
-		const url = `${PokeAPI.baseURL}/location-area/${locationName}`;
-		const data: Location | undefined = await this.#fetchAndCache(url);
+	async fetchLocations(pageURL?: string): Promise<ShallowLocations | undefined> {
+		const url = pageURL ? pageURL : `${PokeAPI.baseURL}/location-area/`;
+		const data: ShallowLocations | undefined =
+			await this.#fetchAndCache<ShallowLocations>(url);
+		return data;
+	}
 
-		if (data) {
-			if (!this.#cache.get(url)) {
-				this.#cache.add<Location>(url, data);
-			}
-			return data;
-		}
+	async fetchLocation(locationName: string): Promise<string[] | undefined> {
+		const url = `${PokeAPI.baseURL}/location-area/${locationName}`;
+		const data: Location | undefined = await this.#fetchAndCache<Location>(url);
+
+		return data ? data.pokemon_encounters.map((entry) => entry.pokemon.name) : undefined;
 	}
 
 	async #fetchAndCache<T>(url: string): Promise<T | undefined> {
@@ -59,15 +68,30 @@ export class PokeAPI {
 
 		try {
 			const res = await fetch(url);
+
 			if (!res.ok) {
-				throw new Error(`Fetch failed: ${res.status} ${res.statusText}`);
+				if (res.status === 404) {
+					logUnknowLocation();
+					return;
+				} else {
+					throw new Error(`Fetch failed: ${res.status} ${res.statusText}`);
+				}
 			}
 
 			const data: T = await res.json();
+			if (!this.#cache.get(url)) {
+				this.#cache.add<T>(url, data);
+			}
 			return data;
 		} catch (error) {
-			error instanceof Error && console.error("Error:", error);
+			error instanceof Error && console.error(error);
 			return;
 		}
 	}
+}
+
+function logUnknowLocation() {
+	console.error(
+		chalk.redBright("❌ That area/pokemon doesn’t exist. Check your spelling, Trainer!")
+	);
 }

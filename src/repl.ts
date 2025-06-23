@@ -24,7 +24,7 @@ export function startREPL(state: State) {
 				const command = commands[words[0]];
 
 				if (command) {
-					await command.callback(state);
+					await command.callback(state, ...words.slice(1));
 				} else {
 					logUnknownCommand();
 				}

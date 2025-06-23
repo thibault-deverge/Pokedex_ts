@@ -5,7 +5,7 @@ import type { State } from "src/state";
  * Displays a formatted list of available commands and their descriptions in the console.
  * @param state - The current application state containing the command registry.
  */
-export async function commandHelp(state: State) {
+export async function commandHelp(state: State, ...args: string[]) {
 	console.log(chalk.cyanBright.bold("\nAvailable commands:"));
 
 	for (const key of Object.keys(state.registry)) {
