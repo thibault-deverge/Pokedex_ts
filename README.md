@@ -3,6 +3,8 @@
 A colorful and interactive command-line Pokédex built with TypeScript and Node.js!  
 Search, catch, inspect, and list Pokémon — all in your terminal. Inspired by retro Pokémon games.
 
+![Demo of Pokedex CLI](./ressources/demo.gif)
+
 ## 🚀 Features
 
 - 🎨 Beautiful terminal output using Chalk & Figlet
@@ -33,12 +35,15 @@ npm run test
 
 ## 🛠️ Setup
 
-1. Clone the repo  
+1. Clone the repo
 2. Install dependencies:
+
 ```bash
 npm install
 ```
+
 3. Start the CLI:
+
 ```bash
 npm run dev
 ```
@@ -64,6 +69,12 @@ src/
 ├── state.ts         # Global state manager
 ├── main.ts          # Entry point
 ```
+
+## 🔧 Maybe Features
+
+- ASCII Art Display: Show Pokémon sprites in the terminal using tools like pokemonsay or jp2a.
+- Save/Load System: Persist your caught Pokémon between sessions.
+- Search & Filter: Easily browse and filter your Pokédex entries by type, name, or stats.
 
 ## 🧙 Author
 
